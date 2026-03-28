@@ -30,13 +30,18 @@ public class Triangle extends AbstractGraphicObject {
         g2.drawLine(position.x, position.y,
                 position.x + a, position.y);
         g2.drawLine(position.x, position.y, cx, cy);
-        g2.drawLine(position.x+a, position.y, cx, cy);
+        g2.drawLine(position.x + a, position.y, cx, cy);
+
     }
 
     @Override
     public boolean contains(Point p) {
-        int dx = (int)Math.round((p.y - position.y) * Math.tan(Math.PI / 6));
-        return p.x >= position.x && p.x < position.x + a && p.y <= position.y && p.y >= cy;
+        if (p.y > position.y || p.y < cy) {
+            return false;
+        }
+        double pointHeight = position.y - p.y;
+        int dx = (int)Math.round(pointHeight * Math.tan(Math.PI / 6));
+        return p.x >= (position.x + dx) && p.x <= (position.x + a - dx);
     }
     @Override
     public void setPosition(Point position) {
