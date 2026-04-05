@@ -35,7 +35,9 @@ public class Canvas extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 if (selectedObject != null) {
-                    selectedObject.setPosition(e.getX()-dx, e.getY()-dy);
+                    var deltaX = e.getX() - selectedObject.getPosition().x - dx;
+                    var deltaY = e.getY() - selectedObject.getPosition().y - dy;
+                    selectedObject.move(deltaX, deltaY);
                     repaint();
                 }
             }
@@ -55,6 +57,7 @@ public class Canvas extends JPanel {
 
     public void add(AbstractGraphicObject object) {
         graphicObjects.add(object);
+        repaint();
     }
 
     @Override
